@@ -11,7 +11,7 @@ public class History
 	
 	public Event(boolean deletion, int position, String change) 
 	{
-		this.pos = pos;
+		this.pos = position;
 		this.deletion = deletion;
 		this.change = change;
 		
@@ -20,12 +20,12 @@ public class History
 		
 	}
 	
-	private Stack<Event> redoevent;
-	private Stack<Event> undoevent;
+	private Stack<Event> redostack;
+	private Stack<Event> undostack;
 	
 public History() {
-	this.redoevent = new Stack<Event>();
-	this.undoevent = new Stack<Event>();
+	this.redostack = new Stack<Event>();
+	this.undostack = new Stack<Event>();
 	
 }
 		
@@ -47,8 +47,8 @@ public History() {
    public void addEvent(boolean deletion, int position, String Change)
    {
 	   Event event = new Event(deletion, position, Change);
-	   this.undoevent.push(event);
-	   redoevent.clear();
+	   this.undostack.push(event);
+	   redostack.clear();
    }
 
 
@@ -59,7 +59,18 @@ public History() {
      */
    public void undoEvent(NotePad note)
    {
-	   
+	   Event lastin = undostack.pop();
+	   redostack.push(lastin);
+	  
+	   if (lastin.deletion == true)
+	   {
+		   note.insert(lastin.pos, lastin.change);
+	   }
+	   else
+	   {
+		   note.remove(lastin.pos, lastin.change.length());
+	   }
+		   
    }
 
 
