@@ -1,6 +1,40 @@
-public class History
-{
+import java.util.Stack;
 
+public class History
+
+{
+	public class Event
+	{
+	public int pos;
+	public boolean deletion;
+	public String change;
+	
+	public Event(boolean deletion, int position, String change) 
+	{
+		this.pos = pos;
+		this.deletion = deletion;
+		this.change = change;
+		
+	}
+	
+		
+	}
+	
+	private Stack<Event> redoevent;
+	private Stack<Event> undoevent;
+	
+public History() {
+	this.redoevent = new Stack<Event>();
+	this.undoevent = new Stack<Event>();
+	
+}
+		
+	
+	
+	public Stack<String> history = new Stack<>();
+	
+	
+	
 
 
     /**
@@ -12,6 +46,9 @@ public class History
      */
    public void addEvent(boolean deletion, int position, String Change)
    {
+	   Event event = new Event(deletion, position, Change);
+	   this.undoevent.push(event);
+	   redoevent.clear();
    }
 
 
@@ -22,6 +59,7 @@ public class History
      */
    public void undoEvent(NotePad note)
    {
+	   
    }
 
 
